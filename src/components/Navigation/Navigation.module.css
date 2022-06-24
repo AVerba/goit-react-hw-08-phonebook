@@ -1,0 +1,13 @@
+.icon {
+  margin-right: 10px;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item:not(:last-child) {
+  margin-right: 20px;
+}
