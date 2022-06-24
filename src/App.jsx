@@ -23,10 +23,10 @@ export const App = () => {
       <AppBar />
       {/*<Suspense fallback={<div>Loading...</div>}>*/}
       <Routes>
-        <Route exact path="/" component={HomeView} />
-        <Route path="/register" component={RegisterView} />
-        <Route path="/login" component={LoginView} />
-        <Route path="/contacts" component={ContactsView} />
+        <Route exact path="/" element={<HomeView />} />
+        <Route path="/register" element={<RegisterView />} />
+        <Route path="/login" element={<LoginView />} />
+        <Route path="/contacts" element={<ContactsView />} />
         <Route path="*" element={<NotFoundPageView />} />
       </Routes>
       {/*</Suspense>*/}
