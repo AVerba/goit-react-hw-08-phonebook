@@ -2,7 +2,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -70%);
+  transform: translate(-50%, -45%);
 
   min-width: 500px;
   margin-left: auto;
@@ -14,4 +14,7 @@
 .checkbox {
   display: flex;
   padding-bottom: 15px;
+}
+.condition {
+  margin-left: 5px;
 }

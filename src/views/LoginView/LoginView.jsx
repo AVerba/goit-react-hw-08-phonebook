@@ -1,27 +1,93 @@
-import styles from './LoginView.module.css';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import styles from './LoginView.module.css';
+
 export const LoginView = () => {
+  const initState = {
+    email: '',
+    password: '',
+  };
+  const [initialValues, setInitialValues] = useState(initState);
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required('Email is required').email('Email is invalid'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(40, 'Password must not exceed 40 characters'),
+  });
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    console.log('Values:::', data);
+    resetAllFields();
+  };
+  const onError = error => {
+    console.log('ERROR:::', error);
+  };
+  const resetAllFields = () => {
+    resetField('email');
+    resetField('password');
+  };
+
+  const {
+    register,
+    handleSubmit,
+    resetField,
+    watch,
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+    reValidateMode: 'onChange',
+    defaultValues: initialValues,
+    resolver: yupResolver(validationSchema),
+  });
+
   return (
     <div className={styles.container}>
-      <Form formclassName={styles.formLogin}>
+      <Form
+        formclassName={styles.formLogin}
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
+
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            {...register('email')}
+          />
+          {errors.email ? (
+            <Form.Text className="text-danger">
+              {errors.email.message}
+            </Form.Text>
+          ) : (
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            {...register('password')}
+          />
+          {errors.password && (
+            <Form.Text className="text-danger">
+              {errors.password.message}
+            </Form.Text>
+          )}
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit" disabled>
+
+        <Button variant="primary" type="submit">
           Submit
         </Button>
       </Form>
