@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { ReactComponent as LoginLogo } from '../../images/login.svg';
 
 import styles from './LoginView.module.css';
 
@@ -54,48 +55,51 @@ export const LoginView = () => {
   });
 
   return (
-    <div className={styles.container}>
-      <Form
-        formclassName={styles.formLogin}
-        onSubmit={handleSubmit(onSubmit, onError)}
-      >
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+    <div className={styles.banner}>
+      <div className={styles.container}>
+        <LoginLogo className={styles.loginImg} />
+        <Form
+          formclassName={styles.formLogin}
+          onSubmit={handleSubmit(onSubmit, onError)}
+        >
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
 
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            {...register('email')}
-          />
-          {errors.email ? (
-            <Form.Text className="text-danger">
-              {errors.email.message}
-            </Form.Text>
-          ) : (
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          )}
-        </Form.Group>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              {...register('email')}
+            />
+            {errors.email ? (
+              <Form.Text className="text-danger">
+                {errors.email.message}
+              </Form.Text>
+            ) : (
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            )}
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            {...register('password')}
-          />
-          {errors.password && (
-            <Form.Text className="text-danger">
-              {errors.password.message}
-            </Form.Text>
-          )}
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              {...register('password')}
+            />
+            {errors.password && (
+              <Form.Text className="text-danger">
+                {errors.password.message}
+              </Form.Text>
+            )}
+          </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 };
