@@ -16,10 +16,12 @@ import { RegisterView } from './views/RegisterView';
 import { LoginView } from './views/LoginView';
 import { ContactsView } from './views/ContactsView';
 import { NotFoundPageView } from './views/NotFoundPageView';
+import { authOperations } from './redux/auth';
 
 export const App = () => {
+  const dispatch = useDispatch();
   return (
-    <Container>
+    <>
       <AppBar />
       {/*<Suspense fallback={<div>Loading...</div>}>*/}
       <Routes>
@@ -30,6 +32,6 @@ export const App = () => {
         <Route path="*" element={<NotFoundPageView />} />
       </Routes>
       {/*</Suspense>*/}
-    </Container>
+    </>
   );
 };

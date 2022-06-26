@@ -1,0 +1,110 @@
+.banner {
+  margin: 0 auto;
+  display: inline-block;
+  width: 100%;
+  height: 100vh;
+
+  background-color: #ffffff;
+  background-image: url(background.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  overflow: hidden;
+  padding: 200px 0;
+}
+
+.title {
+  text-align: center;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 50px;
+  line-height: 1.03;
+  text-transform: uppercase;
+  color: #3b668d;
+}
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+}
+.contentList {
+  display: flex;
+  height: auto;
+  margin-top: 50px;
+}
+.contentItem {
+  width: 50%;
+  padding: 0 20px;
+}
+.contentItem:nth-child(2) {
+  padding-top: 160px;
+}
+.phoneSubtitle {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 156%;
+  text-transform: uppercase;
+  color: #3b668d;
+}
+
+.phoneSubscribe {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 156%;
+  letter-spacing: 0.075em;
+  color: #2b4964;
+}
+
+.link {
+  background-color: #0078d0;
+  border: 0;
+  border-radius: 56px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: system-ui, -apple-system, system-ui, 'Segoe UI', Roboto, Ubuntu,
+    'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  outline: 0;
+  padding: 10px 21px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-top: 30px;
+}
+
+.link:before {
+  background-color: initial;
+  background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+  border-radius: 125px;
+  content: '';
+  height: 50%;
+  left: 4%;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
+  width: 92%;
+}
+
+.link:hover {
+  box-shadow: rgba(255, 255, 255, 0.2) 0 3px 15px inset,
+    rgba(0, 0, 0, 0.1) 0 3px 5px, rgba(0, 0, 0, 0.1) 0 10px 13px;
+  transform: scale(1.05);
+}
+.arrowIcon {
+  margin-left: 10px;
+}

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch } from 'react-redux';
+import { authOperations } from '../../redux/auth';
 import * as Yup from 'yup';
 
 import Form from 'react-bootstrap/Form';
@@ -9,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import styles from './LoginView.module.css';
 
 export const LoginView = () => {
+  const dispatch = useDispatch();
   const initState = {
     email: '',
     password: '',
@@ -24,6 +27,8 @@ export const LoginView = () => {
   });
   const onSubmit = (data, e) => {
     e.preventDefault();
+    const { email, password } = data;
+    dispatch(authOperations.logIn({ email, password }));
     console.log('Values:::', data);
     resetAllFields();
   };

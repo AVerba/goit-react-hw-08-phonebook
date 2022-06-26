@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+
+import { authOperations } from '../../redux/auth';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -11,23 +14,21 @@ import styles from './RegisterView.module.css';
 export const RegisterView = () => {
   const initState = {
     fullname: '',
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
     acceptTerms: false,
   };
   const [initialValues, setInitialValues] = useState(initState);
-  useEffect(() => {
-    console.log(initialValues.acceptTerms);
-  }, [initialValues.acceptTerms]);
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
     fullname: Yup.string().required('Fullname is required'),
-    username: Yup.string()
-      .required('Username is required')
-      .min(6, 'Username must be at least 6 characters')
-      .max(20, 'Username must not exceed 20 characters'),
+    name: Yup.string()
+      .required('Name is required')
+      .min(6, 'Name must be at least 6 characters')
+      .max(20, 'Name must not exceed 20 characters'),
     email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
       .required('Password is required')
@@ -40,15 +41,16 @@ export const RegisterView = () => {
   });
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log('Values:::', data);
-    resetAllFields();
+    const { name, email, password } = data;
+    dispatch(authOperations.register({ name, email, password }));
+    // resetAllFields();
   };
   const onError = error => {
     console.log('ERROR:::', error);
   };
   const resetAllFields = () => {
     resetField('fullname');
-    resetField('username');
+    resetField('name');
     resetField('email');
     resetField('password');
     resetField('confirmPassword');
@@ -94,12 +96,10 @@ export const RegisterView = () => {
           <Form.Control
             type="text"
             placeholder="User name"
-            {...register('username')}
+            {...register('name')}
           />
-          {errors.username && (
-            <Form.Text className="text-danger">
-              {errors.username.message}
-            </Form.Text>
+          {errors.name && (
+            <Form.Text className="text-danger">{errors.name.message}</Form.Text>
           )}
         </Form.Group>
 
