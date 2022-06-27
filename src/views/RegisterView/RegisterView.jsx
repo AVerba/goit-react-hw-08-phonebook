@@ -44,7 +44,7 @@ export const RegisterView = () => {
     e.preventDefault();
     const { name, email, password } = data;
     dispatch(authOperations.register({ name, email, password }));
-    // resetAllFields();
+    resetAllFields();
   };
   const onError = error => {
     console.log('ERROR:::', error);
@@ -93,7 +93,7 @@ export const RegisterView = () => {
               </Form.Text>
             )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicText">
+          <Form.Group className="mb-3" controlId="formBasicText2">
             <Form.Label>User name</Form.Label>
 
             <Form.Control
@@ -141,7 +141,7 @@ export const RegisterView = () => {
             )}
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicPassword2">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"

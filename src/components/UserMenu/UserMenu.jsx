@@ -7,10 +7,11 @@ import styles from './UserMenu.module.css';
 export const UserMenu = () => {
   const dispatch = useDispatch();
   const name = useSelector(authSelectors.getUsername);
+  console.log(name);
   return (
     <div style={styles.container}>
       <img alt="" width="32" style={styles.avatar} />
-      <span style={styles.name}>Добро пожаловать, {name}</span>
+      <span style={styles.name}>Welcome back, {name}</span>
       <Button
         variant="outline-primary"
         className={styles.logOut}

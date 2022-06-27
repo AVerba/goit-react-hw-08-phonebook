@@ -1,0 +1,14 @@
+.contactContainer {
+  border-top: 2px solid #7e8896;
+}
+.contactscVies {
+  display: flex;
+  margin-top: 20px;
+}
+.item {
+  width: 50%;
+  padding: 0 20px;
+}
+.contactsTitle {
+  text-align: center;
+}
