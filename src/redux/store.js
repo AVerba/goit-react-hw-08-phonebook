@@ -18,6 +18,7 @@ import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth';
 import { contactsReducer } from './contacts';
 
+import { contactsApi } from './contacts/contactsApi';
 const authPersistConfig = {
   key: 'auth',
   storage,
@@ -34,6 +35,7 @@ const middleware = [
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   contacts: contactsReducer,
+  [contactsApi.reducerPath]: contactsApi.reducer,
 });
 
 export const store = configureStore({

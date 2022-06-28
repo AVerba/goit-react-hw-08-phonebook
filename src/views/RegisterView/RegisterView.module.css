@@ -12,11 +12,6 @@
 
   overflow: hidden;
 }
-.registerImg {
-  position: absolute;
-  left: -50%;
-  top: 70%;
-}
 
 .container {
   position: absolute;
@@ -32,11 +27,8 @@
   border-radius: 7px;
   box-shadow: 1px -1px 38px 5px rgba(128, 113, 113, 0.71);
 }
-
-.checkbox {
-  display: flex;
-  padding-bottom: 15px;
-}
-.condition {
-  margin-left: 5px;
+.registerImg {
+  position: absolute;
+  left: -50%;
+  top: 70%;
 }

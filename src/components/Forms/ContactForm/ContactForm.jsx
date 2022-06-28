@@ -1,34 +1,29 @@
-import styles from './ContactForm.module.css';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import shortid from 'shortid';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { Container } from '../Container/Container';
-import { contactsOperations } from '../../redux/contacts';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import shortid from 'shortid';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+
 import * as Yup from 'yup';
 import {
   useAddContactMutation,
   useGetContactsQuery,
-} from '../../redux/contacts/contactsOperations';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { authOperations } from '../../redux/auth';
+} from '../../../redux/contacts/contactsApi';
 
-const nameRegex = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|[(\+\(\))]|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import regEx from '../../RegEx/RegEx';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import styles from './ContactForm.module.css';
 
 export const ContactForm = () => {
-  // const { data: contacts, isLoading } = useGetContactsQuery();
-  // const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
-  //   useAddContactMutation();
+  const { data } = useGetContactsQuery();
+  const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
+    useAddContactMutation();
   const initState = {
     name: '',
     number: '',
   };
+
   const [initialValues, setInitialValues] = useState(initState);
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -36,11 +31,11 @@ export const ContactForm = () => {
       .min(6, 'Name must be at least 6 characters')
       .max(20, 'Name must not exceed 20 characters')
       .matches(
-        nameRegex,
+        regEx.nameRegex,
         'Name is not valid its should contain only alphabet letters'
       ),
     number: Yup.string().matches(
-      phoneRegExp,
+      regEx.phoneRegExp,
       'Phone number is not valid its should contain only numbers'
     ),
   });
@@ -62,9 +57,19 @@ export const ContactForm = () => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     const { name, number } = data;
-    // dispatch(authOperations.register({ name, email, password }));
+    e.preventDefault();
+
+    const contact = {
+      id: shortid.generate(),
+      name,
+      number,
+    };
+    if (successfullyAdded) {
+      Notify.success(`Contact ${data.name} added successfully`);
+    }
+    addContact(contact);
     resetAllFields();
-    console.log({ id: shortid.generate(), name, number });
+    // console.log(data);
   };
   const onError = error => {
     console.log('ERROR:::', error);

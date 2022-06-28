@@ -1,0 +1,7 @@
+.checkbox {
+  display: flex;
+  padding-bottom: 15px;
+}
+.condition {
+  margin-left: 5px;
+}

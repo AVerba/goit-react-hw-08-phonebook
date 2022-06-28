@@ -8,7 +8,7 @@ import { authSelectors } from '../../redux/auth';
 import { useSelector } from 'react-redux';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
-export const HomeView = () => {
+const HomeView = () => {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
   return (
     <div className={styles.banner}>
@@ -59,3 +59,5 @@ export const HomeView = () => {
     </div>
   );
 };
+
+export default HomeView;
