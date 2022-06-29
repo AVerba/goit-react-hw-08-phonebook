@@ -6,6 +6,7 @@ import PublicRoute from './Routes/PublicRoute';
 
 import { AppBar } from './components/AppBar';
 import Loader from './components/UI/Loader/Loader';
+import { TodosView } from './views/TodosView';
 
 const HomeView = lazy(() => import('./views/HomeView/HomeView'));
 const RegisterView = lazy(() => import('./views/RegisterView/RegisterView'));
@@ -54,6 +55,18 @@ export const App = () => {
                 component={
                   <Suspense fallback={<Loader />}>
                     <ContactsView />
+                  </Suspense>
+                }
+              />
+            }
+          />
+          <Route
+            path="/todos"
+            element={
+              <PrivateRoute
+                component={
+                  <Suspense fallback={<Loader />}>
+                    <TodosView />
                   </Suspense>
                 }
               />

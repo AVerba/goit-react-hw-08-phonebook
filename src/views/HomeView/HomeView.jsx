@@ -28,7 +28,7 @@ const HomeView = () => {
               as={NavLink}
               className={styles.link}
               eventKey="contacts"
-              to="/login"
+              to="/contacts"
             >
               Try Now
               <DoubleArrowIcon className={styles.arrowIcon} />
@@ -48,7 +48,7 @@ const HomeView = () => {
               as={NavLink}
               className={styles.link}
               eventKey="contacts"
-              to="/login"
+              to="/todos"
             >
               Try Now
               <DoubleArrowIcon className={styles.arrowIcon} />

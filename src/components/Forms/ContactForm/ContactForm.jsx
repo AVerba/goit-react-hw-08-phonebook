@@ -16,9 +16,9 @@ import Button from 'react-bootstrap/Button';
 import styles from './ContactForm.module.css';
 
 export const ContactForm = () => {
-  const { data } = useGetContactsQuery();
-  const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
-    useAddContactMutation();
+  // const { data } = useGetContactsQuery();
+  // const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
+  //   useAddContactMutation();
   const initState = {
     name: '',
     number: '',
@@ -64,10 +64,10 @@ export const ContactForm = () => {
       name,
       number,
     };
-    if (successfullyAdded) {
-      Notify.success(`Contact ${data.name} added successfully`);
-    }
-    addContact(contact);
+    // if (successfullyAdded) {
+    //   Notify.success(`Contact ${data.name} added successfully`);
+    // }
+    // addContact(contact);
     resetAllFields();
     // console.log(data);
   };
