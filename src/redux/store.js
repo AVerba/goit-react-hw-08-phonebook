@@ -19,6 +19,7 @@ import { authReducer } from './auth';
 // import { contactsApi } from './contacts';
 
 import { contactsApi } from './contacts/contactsApi';
+import { contactsSlice } from './contacts/contactsSlice';
 const authPersistConfig = {
   key: 'auth',
   storage,
@@ -34,6 +35,7 @@ const middleware = [
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
+  filter: contactsSlice.reducer,
 
   [contactsApi.reducerPath]: contactsApi.reducer,
 });

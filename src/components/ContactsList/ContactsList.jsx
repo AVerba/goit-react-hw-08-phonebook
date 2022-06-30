@@ -1,29 +1,30 @@
 import styles from './ContactsList.module.css';
-import { ContactsItem } from './ContactItem';
 
 import { useSelector } from 'react-redux';
 import {
   useGetContactsQuery,
   useDeleteContactMutation,
 } from '../../redux/contacts/contactsApi';
-import { contactsSelectors } from '../../redux/contacts/contactsSelectors';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ListGroup } from 'react-bootstrap';
+import { getFilter } from '../../redux/contacts/contactsSlice';
 
 export const ContactList = () => {
-  const { data: contacts, isLoading } = useGetContactsQuery();
+  const { data: contacts, isLoading, refetch } = useGetContactsQuery();
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
-  // const { filter } = useSelector(contactsSelectors.getFilter);
-  const filter = '';
+  const { filter } = useSelector(getFilter);
+  // const filter = '';
+
   const deleteItem = event => {
     deleteContact(event.currentTarget.parentNode.id);
-
     if (!isDeleting) {
       event.currentTarget.innerHTML = 'Deleting ...';
     }
   };
-
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const filteredContacts = () => {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())

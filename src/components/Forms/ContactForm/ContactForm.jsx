@@ -16,7 +16,7 @@ import Button from 'react-bootstrap/Button';
 import styles from './ContactForm.module.css';
 
 export const ContactForm = () => {
-  const { data } = useGetContactsQuery();
+  const { data: contacts } = useGetContactsQuery();
   const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
     useCreateContactMutation();
   const initState = {
