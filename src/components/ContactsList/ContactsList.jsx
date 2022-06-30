@@ -11,29 +11,29 @@ import { ListGroup } from 'react-bootstrap';
 import { getFilter } from '../../redux/contacts/contactsSlice';
 
 export const ContactList = () => {
-  const { data: contacts, isLoading, refetch } = useGetContactsQuery();
+  const { data, isLoading, refetch } = useGetContactsQuery();
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
   const { filter } = useSelector(getFilter);
-  // const filter = '';
-
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const deleteItem = event => {
     deleteContact(event.currentTarget.parentNode.id);
     if (!isDeleting) {
       event.currentTarget.innerHTML = 'Deleting ...';
     }
-  };
-  useEffect(() => {
     refetch();
-  }, [refetch]);
+  };
+  useEffect(() => {}, [refetch]);
   const filteredContacts = () => {
-    return contacts.filter(contact =>
+    return data.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
-  let renderedData = filter === '' ? contacts : filteredContacts();
+  let renderedData = filter === '' ? data : filteredContacts();
   const renderList = (
     <ListGroup className={styles.contactsList}>
-      {contacts &&
+      {data &&
         renderedData.map(({ name, id, number }) => (
           <ListGroup.Item className={styles.listItem} key={id} id={id}>
             <div className={styles.info}>
@@ -54,7 +54,7 @@ export const ContactList = () => {
 
   return isLoading ? (
     <div>loading...</div>
-  ) : contacts.length !== 0 ? (
+  ) : data.length !== 0 ? (
     renderList
   ) : (
     'You have no contacts'

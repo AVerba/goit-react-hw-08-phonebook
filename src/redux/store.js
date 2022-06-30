@@ -23,7 +23,7 @@ import { contactsSlice } from './contacts/contactsSlice';
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'isLoggedIn'],
 };
 const middleware = [
   ...getDefaultMiddleware({
@@ -36,7 +36,6 @@ const middleware = [
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   filter: contactsSlice.reducer,
-
   [contactsApi.reducerPath]: contactsApi.reducer,
 });
 

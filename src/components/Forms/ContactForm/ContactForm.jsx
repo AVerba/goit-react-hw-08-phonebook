@@ -16,7 +16,8 @@ import Button from 'react-bootstrap/Button';
 import styles from './ContactForm.module.css';
 
 export const ContactForm = () => {
-  const { data: contacts } = useGetContactsQuery();
+  const [isDisabled, setIsDisabled] = useState(true);
+  const { data: contacts, refetch } = useGetContactsQuery();
   const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
     useCreateContactMutation();
   const initState = {
@@ -50,6 +51,21 @@ export const ContactForm = () => {
     defaultValues: initialValues,
     resolver: yupResolver(validationSchema),
   });
+
+  const disabledStatus = e => {
+    const name = e.currentTarget.childNodes[1].value;
+    const contactFinder = contacts.find(
+      contact =>
+        contact.name.toLowerCase() ===
+        name.toLowerCase().replace(/ +/g, ' ').trim()
+    );
+    if (contactFinder) {
+      setIsDisabled(true);
+      return Notify.warning(`${name} is already in contacts.`);
+    }
+    setIsDisabled(false);
+  };
+
   const resetAllFields = () => {
     resetField('name');
     resetField('number');
@@ -68,26 +84,24 @@ export const ContactForm = () => {
       Notify.success(`Contact ${data.name} added successfully`);
     }
     addContact(contact);
+    refetch();
     resetAllFields();
-    console.log(data);
   };
+
   const onError = error => {
     console.log('ERROR:::', error);
-  };
-  const disabledStatus = (numberError, nameError) => {
-    if (numberError && !nameError) {
-      return Notify.failure('Please enter contact name');
-    }
-    if (!nameError && nameError) {
-      return Notify.failure('Please enter contact phone number');
-    }
-    return false;
   };
 
   return (
     <div className={styles.contactForm}>
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Form.Group className="mb-3" controlId="formBasicText">
+        <Form.Group
+          className="mb-3"
+          controlId="formBasicTextName"
+          onChange={e => {
+            disabledStatus(e);
+          }}
+        >
           <Form.Label>Contact name</Form.Label>
           <Form.Control
             type="text"
@@ -115,7 +129,8 @@ export const ContactForm = () => {
         <Button
           variant="primary"
           type="submit"
-          disabled={errors.number || errors.name}
+          disabled={isDisabled}
+          // disabled={errors.number || errors.name}
         >
           {isUpdating ? <>Adding...</> : <>Add contact</>}
         </Button>

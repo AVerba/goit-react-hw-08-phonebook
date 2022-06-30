@@ -12,3 +12,6 @@
 .contactsTitle {
   text-align: center;
 }
+item {
+  list-style-type: none;
+}
