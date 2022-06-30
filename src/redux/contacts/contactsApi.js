@@ -45,10 +45,10 @@ export const contactsApi = createApi({
     }),
   }),
 });
+
 export const {
   useGetContactsQuery,
-  useGetContactByIdQuery,
-  useAddContactMutation,
   useDeleteContactMutation,
+  useCreateContactMutation,
   useUpdateContactMutation,
 } = contactsApi;

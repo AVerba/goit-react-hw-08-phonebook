@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 
 import * as Yup from 'yup';
 import {
-  useAddContactMutation,
+  useCreateContactMutation,
   useGetContactsQuery,
 } from '../../../redux/contacts/contactsApi';
 
@@ -16,9 +16,9 @@ import Button from 'react-bootstrap/Button';
 import styles from './ContactForm.module.css';
 
 export const ContactForm = () => {
-  // const { data } = useGetContactsQuery();
-  // const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
-  //   useAddContactMutation();
+  const { data } = useGetContactsQuery();
+  const [addContact, { isLoading: isUpdating, isSuccess: successfullyAdded }] =
+    useCreateContactMutation();
   const initState = {
     name: '',
     number: '',
@@ -64,15 +64,24 @@ export const ContactForm = () => {
       name,
       number,
     };
-    // if (successfullyAdded) {
-    //   Notify.success(`Contact ${data.name} added successfully`);
-    // }
-    // addContact(contact);
+    if (successfullyAdded) {
+      Notify.success(`Contact ${data.name} added successfully`);
+    }
+    addContact(contact);
     resetAllFields();
-    // console.log(data);
+    console.log(data);
   };
   const onError = error => {
     console.log('ERROR:::', error);
+  };
+  const disabledStatus = (numberError, nameError) => {
+    if (numberError && !nameError) {
+      return Notify.failure('Please enter contact name');
+    }
+    if (!nameError && nameError) {
+      return Notify.failure('Please enter contact phone number');
+    }
+    return false;
   };
 
   return (
@@ -108,7 +117,7 @@ export const ContactForm = () => {
           type="submit"
           disabled={errors.number || errors.name}
         >
-          Add contact
+          {isUpdating ? <>Adding...</> : <>Add contact</>}
         </Button>
       </Form>
     </div>
