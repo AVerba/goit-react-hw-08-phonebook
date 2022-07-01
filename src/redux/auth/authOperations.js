@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { failure } from 'notiflix';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -15,19 +17,30 @@ const token = {
 const register = createAsyncThunk('auth/register', async credentials => {
   try {
     const { data } = await axios.post('/users/signup', credentials);
+    data.user &&
+      Notify.success(
+        `Welcome ${data.user.name}! You are successfully registered.`
+      );
     token.set(data.token);
     return data;
   } catch (error) {
-    console.log(error);
+    error?.response?.data?.name === 'MongoError' &&
+      Notify.failure(`User already exists.`);
   }
 });
 const logIn = createAsyncThunk('auth/login', async credentials => {
   try {
     const { data } = await axios.post('/users/login', credentials);
+    data.user &&
+      Notify.success(
+        `Welcome back, ${data.user.name} !!! You are successfully logged in.`,
+        { position: 'right' }
+      );
     token.set(data.token);
     return data;
   } catch (error) {
-    console.log(error);
+    error?.response?.data &&
+      Notify.failure(`wrong login or password, try again`);
   }
 });
 
