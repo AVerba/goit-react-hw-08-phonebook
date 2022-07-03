@@ -148,7 +148,7 @@ export const RegisterForm = () => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword2">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Password"
