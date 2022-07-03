@@ -23,7 +23,7 @@ import { contactsSlice } from './contacts/contactsSlice';
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token', 'isLoggedIn'],
+  whitelist: ['token', 'isLoggedIn', 'user'],
 };
 const middleware = [
   ...getDefaultMiddleware({
