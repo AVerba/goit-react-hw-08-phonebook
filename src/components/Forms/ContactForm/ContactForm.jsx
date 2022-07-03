@@ -73,20 +73,22 @@ export const ContactForm = () => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     const { name, number } = data;
-    e.preventDefault();
 
     const contact = {
       id: shortid.generate(),
       name,
       number,
     };
-    if (successfullyAdded) {
-      Notify.success(`Contact ${data.name} added successfully`);
-    }
     addContact(contact);
-    refetch();
-    resetAllFields();
   };
+
+  useEffect(() => {
+    if (successfullyAdded) {
+      Notify.success(`Contact added successfully`);
+    }
+    resetAllFields();
+    refetch();
+  }, [successfullyAdded]);
 
   const onError = error => {
     console.log('ERROR:::', error);

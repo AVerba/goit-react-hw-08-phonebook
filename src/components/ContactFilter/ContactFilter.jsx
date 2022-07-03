@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 
 export const ContactFilter = () => {
   const dispatch = useDispatch();
+  const { filter } = useSelector(getFilter);
 
   return (
     <Form>
@@ -14,6 +15,7 @@ export const ContactFilter = () => {
         <Form.Control
           type="text"
           placeholder="Search..."
+          value={filter}
           onChange={e => dispatch(setFilter(e.currentTarget.value))}
         />
       </Form.Group>

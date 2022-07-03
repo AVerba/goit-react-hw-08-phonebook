@@ -7,7 +7,7 @@ import styles from './UserMenu.module.css';
 export const UserMenu = () => {
   const dispatch = useDispatch();
   const name = useSelector(authSelectors.getUsername);
-  console.log(name);
+
   return (
     <div style={styles.container}>
       <img alt="" width="32" style={styles.avatar} />
